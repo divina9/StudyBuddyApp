@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 class TimerModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   // State field(s) for Timer widget.
   int timerMilliseconds = 60000;
   String timerValue = StopWatchTimer.getDisplayTime(60000, milliSecond: false);
@@ -22,8 +23,11 @@ class TimerModel extends FlutterFlowModel {
   void initState(BuildContext context) {}
 
   void dispose() {
+    unfocusNode.dispose();
     timerController.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

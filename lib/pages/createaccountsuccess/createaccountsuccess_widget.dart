@@ -8,22 +8,22 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'createaccount_model.dart';
-export 'createaccount_model.dart';
+import 'createaccountsuccess_model.dart';
+export 'createaccountsuccess_model.dart';
 
-class CreateaccountWidget extends StatefulWidget {
-  const CreateaccountWidget({Key? key}) : super(key: key);
+class CreateaccountsuccessWidget extends StatefulWidget {
+  const CreateaccountsuccessWidget({Key? key}) : super(key: key);
 
   @override
-  _CreateaccountWidgetState createState() => _CreateaccountWidgetState();
+  _CreateaccountsuccessWidgetState createState() =>
+      _CreateaccountsuccessWidgetState();
 }
 
-class _CreateaccountWidgetState extends State<CreateaccountWidget>
+class _CreateaccountsuccessWidgetState extends State<CreateaccountsuccessWidget>
     with TickerProviderStateMixin {
-  late CreateaccountModel _model;
+  late CreateaccountsuccessModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
@@ -131,7 +131,7 @@ class _CreateaccountWidgetState extends State<CreateaccountWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateaccountModel());
+    _model = createModel(context, () => CreateaccountsuccessModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -140,14 +140,13 @@ class _CreateaccountWidgetState extends State<CreateaccountWidget>
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -217,16 +216,19 @@ class _CreateaccountWidgetState extends State<CreateaccountWidget>
                         ).animateOnPageLoad(
                             animationsMap['textOnPageLoadAnimation1']!),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            44.0, 8.0, 44.0, 0.0),
-                        child: Text(
-                          'Thanks for joining! Access or create your account below, and get started on your journey!',
-                          textAlign: TextAlign.center,
-                          style: FlutterFlowTheme.of(context).labelMedium,
-                        ).animateOnPageLoad(
-                            animationsMap['textOnPageLoadAnimation2']!),
-                      ),
+                      if (currentUserEmailVerified)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              44.0, 8.0, 44.0, 0.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Text(
+                              'Thanks for joining! Access or create your account below, and get started on your journey!',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context).labelMedium,
+                            ).animateOnPageLoad(
+                                animationsMap['textOnPageLoadAnimation2']!),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -285,8 +287,7 @@ class _CreateaccountWidgetState extends State<CreateaccountWidget>
                               return;
                             }
 
-                            context.goNamedAuth(
-                                'createaccount', context.mounted);
+                            context.goNamedAuth('dashboard', context.mounted);
                           },
                           text: 'My Account',
                           options: FFButtonOptions(

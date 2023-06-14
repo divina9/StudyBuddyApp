@@ -7,25 +7,25 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'timer_model.dart';
-export 'timer_model.dart';
+import 'timer_copy_model.dart';
+export 'timer_copy_model.dart';
 
-class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key}) : super(key: key);
+class TimerCopyWidget extends StatefulWidget {
+  const TimerCopyWidget({Key? key}) : super(key: key);
 
   @override
-  _TimerWidgetState createState() => _TimerWidgetState();
+  _TimerCopyWidgetState createState() => _TimerCopyWidgetState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
-  late TimerModel _model;
+class _TimerCopyWidgetState extends State<TimerCopyWidget> {
+  late TimerCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TimerModel());
+    _model = createModel(context, () => TimerCopyModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -165,38 +165,58 @@ class _TimerWidgetState extends State<TimerWidget> {
                 ),
               ),
               Text(
-                'Only the group admin has access to the timer, however you can leave the session at any time you want.',
+                'Your timer has ended! Would you like to extend the session?',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                       fontFamily: 'Poppins',
                       fontSize: 15.0,
                     ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 44.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    context.pushNamed('success');
-                  },
-                  text: 'Leave Session',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 50.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Outfit',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                        ),
-                    elevation: 2.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(12.0),
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('Timer');
+                },
+                text: 'Yes',
+                options: FFButtonOptions(
+                  width: 97.0,
+                  height: 40.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Outfit',
+                        color: Colors.white,
+                      ),
+                  elevation: 3.0,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1.0,
                   ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('success');
+                },
+                text: 'No',
+                options: FFButtonOptions(
+                  height: 40.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Outfit',
+                        color: Colors.white,
+                      ),
+                  elevation: 3.0,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
             ],

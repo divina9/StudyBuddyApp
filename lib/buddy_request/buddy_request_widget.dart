@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -9,7 +10,12 @@ import 'buddy_request_model.dart';
 export 'buddy_request_model.dart';
 
 class BuddyRequestWidget extends StatefulWidget {
-  const BuddyRequestWidget({Key? key}) : super(key: key);
+  const BuddyRequestWidget({
+    Key? key,
+    required this.userToAccept,
+  }) : super(key: key);
+
+  final DocumentReference? userToAccept;
 
   @override
   _BuddyRequestWidgetState createState() => _BuddyRequestWidgetState();
@@ -19,7 +25,6 @@ class _BuddyRequestWidgetState extends State<BuddyRequestWidget> {
   late BuddyRequestModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -33,14 +38,13 @@ class _BuddyRequestWidgetState extends State<BuddyRequestWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,

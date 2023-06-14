@@ -19,7 +19,6 @@ class _BrowseWidgetState extends State<BrowseWidget> {
   late BrowseModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -34,14 +33,13 @@ class _BrowseWidgetState extends State<BrowseWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -104,6 +102,9 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.emailAddressController,
+                              onFieldSubmitted: (_) async {
+                                context.pushNamed('SearchResults');
+                              },
                               autofocus: true,
                               autofillHints: [AutofillHints.email],
                               obscureText: false,
@@ -241,40 +242,31 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed('ChatPage');
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 8.0, 4.0, 8.0),
-                                        child: Text(
-                                          ' Offline - Agni 3 ',
-                                          textAlign: TextAlign.end,
-                                          style: FlutterFlowTheme.of(context)
-                                              .titleLarge
-                                              .override(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 15.0,
-                                              ),
-                                        ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 8.0, 4.0, 8.0),
+                                      child: Text(
+                                        ' Offline - Agni 3 ',
+                                        textAlign: TextAlign.end,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleLarge
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 15.0,
+                                            ),
                                       ),
-                                      Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: Color(0xFF57636C),
-                                        size: 24.0,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: Color(0xFF57636C),
+                                      size: 24.0,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

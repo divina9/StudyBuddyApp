@@ -9,6 +9,7 @@ import 'schema/users_record.dart';
 import 'schema/to_do_list_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
+import 'schema/merch_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,7 @@ export 'schema/users_record.dart';
 export 'schema/to_do_list_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
+export 'schema/merch_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -229,6 +231,58 @@ Future<FFFirestorePage<ChatMessagesRecord>> queryChatMessagesRecordPage({
       isStream: isStream,
     );
 
+/// Functions to query MerchRecords (as a Stream and as a Future).
+Future<int> queryMerchRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      MerchRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<MerchRecord>> queryMerchRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MerchRecord.collection,
+      MerchRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MerchRecord>> queryMerchRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MerchRecord.collection,
+      MerchRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<MerchRecord>> queryMerchRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      MerchRecord.collection,
+      MerchRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
 Future<int> queryCollectionCount(
   Query collection, {
   Query Function(Query)? queryBuilder,
@@ -357,14 +411,14 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
 
 // Creates a Firestore document representing the logged in user if it doesn't yet exist
 Future maybeCreateUser(User user) async {
-  final userRecord = UsersRecord.collection.doc(user.uid);
+  final userRecord = ChatMessagesRecord.collection.doc(user.uid);
   final userExists = await userRecord.get().then((u) => u.exists);
   if (userExists) {
-    currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
+    currentUserDocument = await ChatMessagesRecord.getDocumentOnce(userRecord);
     return;
   }
 
-  final userData = createUsersRecordData(
+  final userData = createChatMessagesRecordData(
     email: user.email,
     displayName: user.displayName,
     photoUrl: user.photoURL,
@@ -374,5 +428,6 @@ Future maybeCreateUser(User user) async {
   );
 
   await userRecord.set(userData);
-  currentUserDocument = UsersRecord.getDocumentFromData(userData, userRecord);
+  currentUserDocument =
+      ChatMessagesRecord.getDocumentFromData(userData, userRecord);
 }

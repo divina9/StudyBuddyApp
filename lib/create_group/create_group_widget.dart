@@ -1,14 +1,15 @@
-import '/flutter_flow/flutter_flow_animations.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,53 +23,15 @@ class CreateGroupWidget extends StatefulWidget {
   _CreateGroupWidgetState createState() => _CreateGroupWidgetState();
 }
 
-class _CreateGroupWidgetState extends State<CreateGroupWidget>
-    with TickerProviderStateMixin {
+class _CreateGroupWidgetState extends State<CreateGroupWidget> {
   late CreateGroupModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
-
-  final animationsMap = {
-    'circleImageOnActionTriggerAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(1.0, 1.0),
-          end: Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'circleImageOnActionTriggerAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(1.0, 1.0),
-          end: Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => CreateGroupModel());
-
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -77,14 +40,13 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -125,68 +87,32 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                 alignment: AlignmentDirectional(-0.86, -0.86),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                  child: Text(
-                    'Divina\'s Study Session',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Outfit',
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.w800,
-                        ),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      final chatMessagesUpdateData =
+                          createChatMessagesRecordData();
+                      await currentUserReference!
+                          .update(chatMessagesUpdateData);
+                    },
+                    child: Text(
+                      '[USER] Study Session',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Outfit',
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.w800,
+                          ),
+                    ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.71, -0.6),
-                child: Container(
-                  width: 120.0,
-                  height: 120.0,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                    'https://picsum.photos/seed/932/600',
-                    fit: BoxFit.cover,
-                  ),
-                ).animateOnActionTrigger(
-                  animationsMap['circleImageOnActionTriggerAnimation1']!,
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.46, -0.61),
-                child: Container(
-                  width: 120.0,
-                  height: 120.0,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.network(
-                    'https://picsum.photos/seed/932/600',
-                    fit: BoxFit.cover,
-                  ),
-                ).animateOnActionTrigger(
-                  animationsMap['circleImageOnActionTriggerAnimation2']!,
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.38, -0.32),
-                child: Text(
-                  'Offline',
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.54, -0.31),
-                child: Text(
-                  'Online',
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.32, -0.15),
+                alignment: AlignmentDirectional(-0.5, -0.32),
                 child: FlutterFlowDropDown<String>(
-                  controller: _model.dropDownValueController ??=
+                  controller: _model.dropDownValueController1 ??=
                       FormFieldController<String>(null),
                   options: [
                     'Agni 1',
@@ -198,7 +124,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                     'Mess'
                   ],
                   onChanged: (val) =>
-                      setState(() => _model.dropDownValue = val),
+                      setState(() => _model.dropDownValue1 = val),
                   width: 300.0,
                   height: 50.0,
                   searchHintTextStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -221,7 +147,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.08, 0.15),
+                alignment: AlignmentDirectional(-0.11, 0.05),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -283,15 +209,15 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                     ),
-                    child: Image.network(
-                      'https://picsum.photos/seed/57/600',
-                      fit: BoxFit.cover,
+                    child: Image.asset(
+                      'assets/images/schedule.png',
+                      fit: BoxFit.scaleDown,
                     ),
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.07, 0.33),
+                alignment: AlignmentDirectional(-0.11, 0.25),
                 child: Text(
                   'Select Date and time',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -301,32 +227,10 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.72, 0.5),
-                child: Theme(
-                  data: ThemeData(
-                    checkboxTheme: CheckboxThemeData(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                    unselectedWidgetColor:
-                        FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  child: Checkbox(
-                    value: _model.checkboxValue ??= true,
-                    onChanged: (newValue) async {
-                      setState(() => _model.checkboxValue = newValue!);
-                    },
-                    activeColor: FlutterFlowTheme.of(context).primary,
-                    checkColor: FlutterFlowTheme.of(context).info,
-                  ),
-                ),
-              ),
-              Align(
                 alignment: AlignmentDirectional(-0.05, 0.68),
                 child: FFButtonWidget(
-                  onPressed: () async {
-                    context.pushNamed('BuddyRequest');
+                  onPressed: () {
+                    print('Button pressed ...');
                   },
                   text: 'Create Group',
                   options: FFButtonOptions(
@@ -347,6 +251,60 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget>
                     ),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.46, -0.7),
+                child: FlutterFlowDropDown<String>(
+                  controller: _model.dropDownValueController2 ??=
+                      FormFieldController<String>(null),
+                  options: ['Online', 'Offline'],
+                  onChanged: (val) =>
+                      setState(() => _model.dropDownValue2 = val),
+                  width: 300.0,
+                  height: 50.0,
+                  textStyle: FlutterFlowTheme.of(context).bodyMedium,
+                  hintText: 'Online/Offline',
+                  icon: Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 24.0,
+                  ),
+                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  elevation: 2.0,
+                  borderColor: FlutterFlowTheme.of(context).alternate,
+                  borderWidth: 2.0,
+                  borderRadius: 8.0,
+                  margin: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                  hidesUnderline: true,
+                  isSearchable: false,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.48, -0.51),
+                child: FlutterFlowDropDown<String>(
+                  controller: _model.dropDownValueController3 ??=
+                      FormFieldController<String>(null),
+                  options: ['Public', 'Private'],
+                  onChanged: (val) =>
+                      setState(() => _model.dropDownValue3 = val),
+                  width: 300.0,
+                  height: 50.0,
+                  textStyle: FlutterFlowTheme.of(context).bodyMedium,
+                  hintText: 'Public/ Private',
+                  icon: Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 24.0,
+                  ),
+                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  elevation: 2.0,
+                  borderColor: FlutterFlowTheme.of(context).alternate,
+                  borderWidth: 2.0,
+                  borderRadius: 8.0,
+                  margin: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                  hidesUnderline: true,
+                  isSearchable: false,
                 ),
               ),
             ],

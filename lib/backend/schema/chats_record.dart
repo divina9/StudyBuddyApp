@@ -55,6 +55,16 @@ class ChatsRecord extends FirestoreRecord {
   bool get icon => _icon ?? false;
   bool hasIcon() => _icon != null;
 
+  // "chatUsers" field.
+  String? _chatUsers;
+  String get chatUsers => _chatUsers ?? '';
+  bool hasChatUsers() => _chatUsers != null;
+
+  // "name" field.
+  String? _name;
+  String get name => _name ?? '';
+  bool hasName() => _name != null;
+
   void _initializeFields() {
     _users = getDataList(snapshotData['users']);
     _userA = snapshotData['user_a'] as DocumentReference?;
@@ -65,6 +75,8 @@ class ChatsRecord extends FirestoreRecord {
         snapshotData['last_message_sent_by'] as DocumentReference?;
     _lastMessageSeenBy = getDataList(snapshotData['last_message_seen_by']);
     _icon = snapshotData['Icon'] as bool?;
+    _chatUsers = snapshotData['chatUsers'] as String?;
+    _name = snapshotData['name'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -90,6 +102,14 @@ class ChatsRecord extends FirestoreRecord {
   @override
   String toString() =>
       'ChatsRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is ChatsRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createChatsRecordData({
@@ -99,6 +119,8 @@ Map<String, dynamic> createChatsRecordData({
   DateTime? lastMessageTime,
   DocumentReference? lastMessageSentBy,
   bool? icon,
+  String? chatUsers,
+  String? name,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -108,6 +130,8 @@ Map<String, dynamic> createChatsRecordData({
       'last_message_time': lastMessageTime,
       'last_message_sent_by': lastMessageSentBy,
       'Icon': icon,
+      'chatUsers': chatUsers,
+      'name': name,
     }.withoutNulls,
   );
 

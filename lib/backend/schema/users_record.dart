@@ -54,6 +54,11 @@ class UsersRecord extends FirestoreRecord {
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "DocumentID" field.
+  List<DocumentReference>? _documentID;
+  List<DocumentReference> get documentID => _documentID ?? const [];
+  bool hasDocumentID() => _documentID != null;
+
   void _initializeFields() {
     _password = snapshotData['Password'] as String?;
     _fullName = snapshotData['FullName'] as String?;
@@ -63,6 +68,7 @@ class UsersRecord extends FirestoreRecord {
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _documentID = getDataList(snapshotData['DocumentID']);
   }
 
   static CollectionReference get collection =>
@@ -88,6 +94,14 @@ class UsersRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UsersRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UsersRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUsersRecordData({

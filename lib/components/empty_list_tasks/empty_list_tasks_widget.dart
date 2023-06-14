@@ -90,9 +90,9 @@ class _EmptyListTasksWidgetState extends State<EmptyListTasksWidget> {
                 backgroundColor: Colors.transparent,
                 barrierColor: Color(0x230E151B),
                 context: context,
-                builder: (bottomSheetContext) {
+                builder: (context) {
                   return Padding(
-                    padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                    padding: MediaQuery.of(context).viewInsets,
                     child: Container(
                       height: double.infinity,
                       child: CreateTaskNewWidget(),

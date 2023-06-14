@@ -92,6 +92,24 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
               value: _model.switchListTileValue1 ??= true,
               onChanged: (newValue) async {
                 setState(() => _model.switchListTileValue1 = newValue!);
+                if (newValue!) {
+                  await showDialog(
+                    context: context,
+                    builder: (alertDialogContext) {
+                      return AlertDialog(
+                        title: Text('Push Notification Enabled'),
+                        content:
+                            Text('You have now enabled push notifications'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(alertDialogContext),
+                            child: Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
               title: Text(
                 'Push Notifications',
@@ -113,6 +131,22 @@ class _AppSettingsWidgetState extends State<AppSettingsWidget> {
             value: _model.switchListTileValue2 ??= true,
             onChanged: (newValue) async {
               setState(() => _model.switchListTileValue2 = newValue!);
+              if (newValue!) {
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      title: Text('Email Notfi'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             title: Text(
               'Email Notifications',

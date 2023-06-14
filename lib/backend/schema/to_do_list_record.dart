@@ -77,6 +77,14 @@ class ToDoListRecord extends FirestoreRecord {
   @override
   String toString() =>
       'ToDoListRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is ToDoListRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createToDoListRecordData({
