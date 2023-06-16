@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -13,8 +14,9 @@ class TimerModel extends FlutterFlowModel {
 
   final unfocusNode = FocusNode();
   // State field(s) for Timer widget.
-  int timerMilliseconds = 60000;
-  String timerValue = StopWatchTimer.getDisplayTime(60000, milliSecond: false);
+  int timerMilliseconds = 3600000;
+  String timerValue =
+      StopWatchTimer.getDisplayTime(3600000, milliSecond: false);
   StopWatchTimer timerController =
       StopWatchTimer(mode: StopWatchMode.countDown);
 

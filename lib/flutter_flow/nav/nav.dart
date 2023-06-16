@@ -52,10 +52,13 @@ class AppStateNotifier extends ChangeNotifier {
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
   void update(BaseAuthUser newUser) {
+    final shouldUpdate =
+        user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
-    if (notifyOnAuthChange) {
+    // No need to update unless the user has changed.
+    if (notifyOnAuthChange && shouldUpdate) {
       notifyListeners();
     }
     // Once again mark the notifier as needing to update on auth change
@@ -110,6 +113,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Browse',
           path: '/browse',
+          requireAuth: true,
           builder: (context, params) => BrowseWidget(),
         ),
         FFRoute(
@@ -146,11 +150,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AppSettingsWidget(),
         ),
         FFRoute(
-          name: 'firebasetrial',
-          path: '/firebasetrial',
-          builder: (context, params) => FirebasetrialWidget(),
-        ),
-        FFRoute(
           name: 'EmailAuth',
           path: '/emailAuth',
           builder: (context, params) => EmailAuthWidget(),
@@ -159,11 +158,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CreateProfile',
           path: '/createProfile',
           builder: (context, params) => CreateProfileWidget(),
-        ),
-        FFRoute(
-          name: 'TimerCopy',
-          path: '/timerCopy',
-          builder: (context, params) => TimerCopyWidget(),
         ),
         FFRoute(
           name: 'timer_withrestart',
