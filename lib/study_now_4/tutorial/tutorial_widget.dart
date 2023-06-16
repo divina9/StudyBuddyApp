@@ -104,25 +104,6 @@ class _TutorialWidgetState extends State<TutorialWidget>
         ),
       ],
     ),
-    'imageOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(1.2, 1.2),
-          end: Offset(1.0, 1.0),
-        ),
-      ],
-    ),
     'textOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -176,25 +157,6 @@ class _TutorialWidgetState extends State<TutorialWidget>
           delay: 0.ms,
           duration: 600.ms,
           begin: Offset(0.5, 0.5),
-          end: Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'imageOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(1.2, 1.2),
           end: Offset(1.0, 1.0),
         ),
       ],
@@ -275,7 +237,7 @@ class _TutorialWidgetState extends State<TutorialWidget>
         ),
       ],
     ),
-    'imageOnPageLoadAnimation4': AnimationInfo(
+    'imageOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         FadeEffect(
@@ -433,7 +395,7 @@ class _TutorialWidgetState extends State<TutorialWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 0.0),
                               child: Text(
-                                'Find someone to help you with a challenging subject or keep you accountable and motivated. Join our community today and make the most of your study time!\n\n',
+                                'Find someone to help you with a challenging subject or keep you accountable and motivated. Join our community today and make the most of your study time!\n',
                                 style: FlutterFlowTheme.of(context).labelMedium,
                               ).animateOnPageLoad(
                                   animationsMap['textOnPageLoadAnimation2']!),
@@ -475,13 +437,6 @@ class _TutorialWidgetState extends State<TutorialWidget>
                   Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Image.asset(
-                        'assets/images/epic-luxe-womens-mid-rise-trail-running-leggings-N5wX3G.png',
-                        width: double.infinity,
-                        height: 500.0,
-                        fit: BoxFit.cover,
-                      ).animateOnPageLoad(
-                          animationsMap['imageOnPageLoadAnimation2']!),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 24.0, 24.0, 24.0),
@@ -552,13 +507,6 @@ class _TutorialWidgetState extends State<TutorialWidget>
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Image.asset(
-                          'assets/images/quest-4-womens-road-running-shoes-LM6nH6.png',
-                          width: double.infinity,
-                          height: 500.0,
-                          fit: BoxFit.cover,
-                        ).animateOnPageLoad(
-                            animationsMap['imageOnPageLoadAnimation3']!),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 24.0, 24.0, 24.0),
@@ -655,7 +603,7 @@ class _TutorialWidgetState extends State<TutorialWidget>
                                   height: 160.0,
                                   fit: BoxFit.fitWidth,
                                 ).animateOnPageLoad(animationsMap[
-                                    'imageOnPageLoadAnimation4']!),
+                                    'imageOnPageLoadAnimation2']!),
                               ),
                               Text(
                                 'You\'re all ready.',

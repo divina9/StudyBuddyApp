@@ -29,9 +29,7 @@ class _SearchResultsWidgetState extends State<SearchResultsWidget>
     _model = createModel(context, () => SearchResultsModel());
 
     _model.textController ??= TextEditingController();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-          _model.textController?.text = 'Ran';
-        }));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

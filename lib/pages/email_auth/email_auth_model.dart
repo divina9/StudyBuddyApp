@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,39 +15,39 @@ class EmailAuthModel extends FlutterFlowModel {
 
   final unfocusNode = FocusNode();
   // State field(s) for emailAddress widget.
-  TextEditingController? emailAddressController1;
-  String? Function(BuildContext, String?)? emailAddressController1Validator;
+  TextEditingController? emailAddressController;
+  String? Function(BuildContext, String?)? emailAddressControllerValidator;
   // State field(s) for password widget.
-  TextEditingController? passwordController1;
-  late bool passwordVisibility1;
-  String? Function(BuildContext, String?)? passwordController1Validator;
+  TextEditingController? passwordController;
+  late bool passwordVisibility;
+  String? Function(BuildContext, String?)? passwordControllerValidator;
   // State field(s) for confirmPassword widget.
   TextEditingController? confirmPasswordController;
   late bool confirmPasswordVisibility;
   String? Function(BuildContext, String?)? confirmPasswordControllerValidator;
-  // State field(s) for emailAddress widget.
-  TextEditingController? emailAddressController2;
-  String? Function(BuildContext, String?)? emailAddressController2Validator;
-  // State field(s) for password widget.
-  TextEditingController? passwordController2;
-  late bool passwordVisibility2;
-  String? Function(BuildContext, String?)? passwordController2Validator;
+  // State field(s) for emailAddresslogin widget.
+  TextEditingController? emailAddressloginController;
+  String? Function(BuildContext, String?)? emailAddressloginControllerValidator;
+  // State field(s) for passwordlogin widget.
+  TextEditingController? passwordloginController;
+  late bool passwordloginVisibility;
+  String? Function(BuildContext, String?)? passwordloginControllerValidator;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
-    passwordVisibility1 = false;
+    passwordVisibility = false;
     confirmPasswordVisibility = false;
-    passwordVisibility2 = false;
+    passwordloginVisibility = false;
   }
 
   void dispose() {
     unfocusNode.dispose();
-    emailAddressController1?.dispose();
-    passwordController1?.dispose();
+    emailAddressController?.dispose();
+    passwordController?.dispose();
     confirmPasswordController?.dispose();
-    emailAddressController2?.dispose();
-    passwordController2?.dispose();
+    emailAddressloginController?.dispose();
+    passwordloginController?.dispose();
   }
 
   /// Action blocks are added here.

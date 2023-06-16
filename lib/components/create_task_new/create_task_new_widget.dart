@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'create_task_new_model.dart';
@@ -247,54 +246,33 @@ class _CreateTaskNewWidgetState extends State<CreateTaskNewWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              if (kIsWeb) {
-                                final _datePickedDate = await showDatePicker(
+                              final _datePickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: getCurrentTimestamp,
+                                firstDate: getCurrentTimestamp,
+                                lastDate: DateTime(2050),
+                              );
+
+                              TimeOfDay? _datePickedTime;
+                              if (_datePickedDate != null) {
+                                _datePickedTime = await showTimePicker(
                                   context: context,
-                                  initialDate: getCurrentTimestamp,
-                                  firstDate: getCurrentTimestamp,
-                                  lastDate: DateTime(2050),
+                                  initialTime: TimeOfDay.fromDateTime(
+                                      getCurrentTimestamp),
                                 );
+                              }
 
-                                TimeOfDay? _datePickedTime;
-                                if (_datePickedDate != null) {
-                                  _datePickedTime = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.fromDateTime(
-                                        getCurrentTimestamp),
+                              if (_datePickedDate != null &&
+                                  _datePickedTime != null) {
+                                setState(() {
+                                  _model.datePicked = DateTime(
+                                    _datePickedDate.year,
+                                    _datePickedDate.month,
+                                    _datePickedDate.day,
+                                    _datePickedTime!.hour,
+                                    _datePickedTime.minute,
                                   );
-                                }
-
-                                if (_datePickedDate != null &&
-                                    _datePickedTime != null) {
-                                  setState(() {
-                                    _model.datePicked = DateTime(
-                                      _datePickedDate.year,
-                                      _datePickedDate.month,
-                                      _datePickedDate.day,
-                                      _datePickedTime!.hour,
-                                      _datePickedTime.minute,
-                                    );
-                                  });
-                                }
-                              } else {
-                                await DatePicker.showDateTimePicker(
-                                  context,
-                                  showTitleActions: true,
-                                  onConfirm: (date) {
-                                    setState(() {
-                                      _model.datePicked = date;
-                                    });
-                                  },
-                                  currentTime: getCurrentTimestamp,
-                                  minTime: getCurrentTimestamp,
-                                  locale: LocaleType.values.firstWhere(
-                                    (l) =>
-                                        l.name ==
-                                        FFLocalizations.of(context)
-                                            .languageCode,
-                                    orElse: () => LocaleType.en,
-                                  ),
-                                );
+                                });
                               }
                             },
                             child: Container(

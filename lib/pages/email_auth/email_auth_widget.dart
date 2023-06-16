@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -107,8 +106,8 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
 
       final user = await authManager.signInWithEmail(
         context,
-        _model.emailAddressController1.text,
-        _model.passwordController1.text,
+        _model.emailAddressController.text,
+        _model.passwordController.text,
       );
       if (user == null) {
         return;
@@ -117,11 +116,11 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
       context.goNamedAuth('dashboard', context.mounted);
     });
 
-    _model.emailAddressController1 ??= TextEditingController();
-    _model.passwordController1 ??= TextEditingController();
+    _model.emailAddressController ??= TextEditingController();
+    _model.passwordController ??= TextEditingController();
     _model.confirmPasswordController ??= TextEditingController();
-    _model.emailAddressController2 ??= TextEditingController();
-    _model.passwordController2 ??= TextEditingController();
+    _model.emailAddressloginController ??= TextEditingController();
+    _model.passwordloginController ??= TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -308,13 +307,13 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                         width: double.infinity,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .emailAddressController1,
+                                                              .emailAddressController,
                                                           onFieldSubmitted:
                                                               (_) async {
                                                             GoRouter.of(context)
                                                                 .prepareAuthEvent();
                                                             if (_model
-                                                                    .passwordController1
+                                                                    .passwordController
                                                                     .text !=
                                                                 _model
                                                                     .confirmPasswordController
@@ -336,25 +335,15 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                                     .createAccountWithEmail(
                                                               context,
                                                               _model
-                                                                  .emailAddressController1
+                                                                  .emailAddressController
                                                                   .text,
                                                               _model
-                                                                  .passwordController1
+                                                                  .passwordController
                                                                   .text,
                                                             );
                                                             if (user == null) {
                                                               return;
                                                             }
-
-                                                            final chatMessagesCreateData =
-                                                                createChatMessagesRecordData(
-                                                              email: '',
-                                                            );
-                                                            await ChatMessagesRecord
-                                                                .collection
-                                                                .doc(user.uid)
-                                                                .update(
-                                                                    chatMessagesCreateData);
 
                                                             context.goNamedAuth(
                                                                 'dashboard',
@@ -455,7 +444,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                               TextInputType
                                                                   .emailAddress,
                                                           validator: _model
-                                                              .emailAddressController1Validator
+                                                              .emailAddressControllerValidator
                                                               .asValidator(
                                                                   context),
                                                         ),
@@ -473,14 +462,14 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                         width: double.infinity,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .passwordController1,
+                                                              .passwordController,
                                                           autofocus: true,
                                                           autofillHints: [
                                                             AutofillHints
                                                                 .password
                                                           ],
                                                           obscureText: !_model
-                                                              .passwordVisibility1,
+                                                              .passwordVisibility,
                                                           decoration:
                                                               InputDecoration(
                                                             labelText:
@@ -567,15 +556,15 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                               onTap: () =>
                                                                   setState(
                                                                 () => _model
-                                                                        .passwordVisibility1 =
+                                                                        .passwordVisibility =
                                                                     !_model
-                                                                        .passwordVisibility1,
+                                                                        .passwordVisibility,
                                                               ),
                                                               focusNode: FocusNode(
                                                                   skipTraversal:
                                                                       true),
                                                               child: Icon(
-                                                                _model.passwordVisibility1
+                                                                _model.passwordVisibility
                                                                     ? Icons
                                                                         .visibility_outlined
                                                                     : Icons
@@ -591,7 +580,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                                   .of(context)
                                                               .titleMedium,
                                                           validator: _model
-                                                              .passwordController1Validator
+                                                              .passwordControllerValidator
                                                               .asValidator(
                                                                   context),
                                                         ),
@@ -750,7 +739,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                             GoRouter.of(context)
                                                                 .prepareAuthEvent();
                                                             if (_model
-                                                                    .passwordController1
+                                                                    .passwordController
                                                                     .text !=
                                                                 _model
                                                                     .confirmPasswordController
@@ -772,25 +761,15 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                                     .createAccountWithEmail(
                                                               context,
                                                               _model
-                                                                  .emailAddressController1
+                                                                  .emailAddressController
                                                                   .text,
                                                               _model
-                                                                  .passwordController1
+                                                                  .passwordController
                                                                   .text,
                                                             );
                                                             if (user == null) {
                                                               return;
                                                             }
-
-                                                            final chatMessagesCreateData =
-                                                                createChatMessagesRecordData(
-                                                              email: '',
-                                                            );
-                                                            await ChatMessagesRecord
-                                                                .collection
-                                                                .doc(user.uid)
-                                                                .update(
-                                                                    chatMessagesCreateData);
 
                                                             context.pushNamedAuth(
                                                                 'Tutorial',
@@ -1065,11 +1044,14 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                         width: double.infinity,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .emailAddressController2,
+                                                              .emailAddressloginController,
                                                           autofocus: true,
                                                           autofillHints: [
                                                             AutofillHints.email
                                                           ],
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .none,
                                                           obscureText: false,
                                                           decoration:
                                                               InputDecoration(
@@ -1149,11 +1131,8 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyLarge,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .emailAddress,
                                                           validator: _model
-                                                              .emailAddressController2Validator
+                                                              .emailAddressloginControllerValidator
                                                               .asValidator(
                                                                   context),
                                                         ),
@@ -1171,14 +1150,14 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                         width: double.infinity,
                                                         child: TextFormField(
                                                           controller: _model
-                                                              .passwordController2,
+                                                              .passwordloginController,
                                                           autofocus: true,
                                                           autofillHints: [
                                                             AutofillHints
                                                                 .password
                                                           ],
                                                           obscureText: !_model
-                                                              .passwordVisibility2,
+                                                              .passwordloginVisibility,
                                                           decoration:
                                                               InputDecoration(
                                                             labelText:
@@ -1258,15 +1237,15 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                               onTap: () =>
                                                                   setState(
                                                                 () => _model
-                                                                        .passwordVisibility2 =
+                                                                        .passwordloginVisibility =
                                                                     !_model
-                                                                        .passwordVisibility2,
+                                                                        .passwordloginVisibility,
                                                               ),
                                                               focusNode: FocusNode(
                                                                   skipTraversal:
                                                                       true),
                                                               child: Icon(
-                                                                _model.passwordVisibility2
+                                                                _model.passwordloginVisibility
                                                                     ? Icons
                                                                         .visibility_outlined
                                                                     : Icons
@@ -1282,7 +1261,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                                   .of(context)
                                                               .bodyLarge,
                                                           validator: _model
-                                                              .passwordController2Validator
+                                                              .passwordloginControllerValidator
                                                               .asValidator(
                                                                   context),
                                                         ),
@@ -1310,17 +1289,17 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                                     .signInWithEmail(
                                                               context,
                                                               _model
-                                                                  .emailAddressController1
+                                                                  .emailAddressloginController
                                                                   .text,
                                                               _model
-                                                                  .passwordController1
+                                                                  .passwordloginController
                                                                   .text,
                                                             );
                                                             if (user == null) {
                                                               return;
                                                             }
 
-                                                            context.pushNamedAuth(
+                                                            context.goNamedAuth(
                                                                 'dashboard',
                                                                 context
                                                                     .mounted);
@@ -1519,7 +1498,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                         child: FFButtonWidget(
                                                           onPressed: () async {
                                                             if (_model
-                                                                .emailAddressController1
+                                                                .emailAddressController
                                                                 .text
                                                                 .isEmpty) {
                                                               ScaffoldMessenger
@@ -1536,7 +1515,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                             await authManager
                                                                 .resetPassword(
                                                               email: _model
-                                                                  .emailAddressController1
+                                                                  .emailAddressController
                                                                   .text,
                                                               context: context,
                                                             );
