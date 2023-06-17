@@ -772,7 +772,7 @@ class _EmailAuthWidgetState extends State<EmailAuthWidget>
                                                             }
 
                                                             context.pushNamedAuth(
-                                                                'Tutorial',
+                                                                'createaccountsuccess',
                                                                 context
                                                                     .mounted);
                                                           },
