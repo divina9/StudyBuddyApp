@@ -135,11 +135,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => CreateGroupWidget(),
         ),
         FFRoute(
-          name: 'SearchResults',
-          path: '/searchResults',
-          builder: (context, params) => SearchResultsWidget(),
-        ),
-        FFRoute(
           name: 'Profile04',
           path: '/profile04',
           builder: (context, params) => Profile04Widget(),
@@ -158,11 +153,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CreateProfile',
           path: '/createProfile',
           builder: (context, params) => CreateProfileWidget(),
-        ),
-        FFRoute(
-          name: 'timer_withrestart',
-          path: '/timerWithrestart',
-          builder: (context, params) => TimerWithrestartWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -342,13 +332,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      color: FlutterFlowTheme.of(context).primary,
-                    ),
+              ? Container(
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/Study_Smarter,_Together..png',
+                    fit: BoxFit.cover,
                   ),
                 )
               : page;

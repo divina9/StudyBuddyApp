@@ -583,7 +583,7 @@ class _PreferenceSettingsPageWidgetState
                 onPressed: () async {
                   context.pushNamed('CreateProfile');
                 },
-                text: 'Creat profite',
+                text: 'Create profile',
                 options: FFButtonOptions(
                   height: 40.0,
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),

@@ -280,14 +280,7 @@ class _CreateaccountsuccessWidgetState extends State<CreateaccountsuccessWidget>
                             EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 16.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            GoRouter.of(context).prepareAuthEvent();
-                            final user =
-                                await authManager.signInWithGoogle(context);
-                            if (user == null) {
-                              return;
-                            }
-
-                            context.goNamedAuth('dashboard', context.mounted);
+                            context.pushNamed('dashboard');
                           },
                           text: 'My Account',
                           options: FFButtonOptions(

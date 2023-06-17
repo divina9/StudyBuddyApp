@@ -102,6 +102,31 @@ class _TimerWidgetState extends State<TimerWidget> {
                                 style:
                                     FlutterFlowTheme.of(context).headlineSmall,
                               ),
+                              Container(
+                                width: 65.0,
+                                height: 60.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).alternate,
+                                  borderRadius: 30.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 60.0,
+                                  fillColor: Colors.white,
+                                  icon: Icon(
+                                    Icons.refresh,
+                                    color: Color(0xFF14181B),
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () async {
+                                    _model.timerController.onExecute
+                                        .add(StopWatchExecute.reset);
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),

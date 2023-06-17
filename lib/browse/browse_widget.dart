@@ -102,9 +102,6 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                             width: double.infinity,
                             child: TextFormField(
                               controller: _model.emailAddressController,
-                              onFieldSubmitted: (_) async {
-                                context.pushNamed('SearchResults');
-                              },
                               autofocus: true,
                               autofillHints: [AutofillHints.email],
                               obscureText: false,
